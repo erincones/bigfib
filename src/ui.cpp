@@ -19,7 +19,7 @@ void UI::_print_error() const {
 // Display help message
 void UI::_print_help() const {
   std::cout
-    << "Usage: " << this->_bin << " {[OPTIONS] N}..."
+    << "Usage: " << this->_bin << " [OPTIONS]... N..."
     << std::endl
     << "Calculate the Fibonacci number of the given N terms."
     << std::endl << std::endl
@@ -56,44 +56,36 @@ void UI::_print_version() const {
 // User interface constructor
 UI::UI(const int &argc, const char *const *const argv) :
 _bin(argv[0]),
-_help(false),
-_version(false) {
-  bool print_number = true;
-  bool print_summary = true;
-  std::vector<const char *> unknown;
-
+_show_help(false),
+_show_version(false),
+_print_number(true),
+_print_summary(true) {
   for (int i = 1; i < argc; ++i) {
     const char *const curr = argv[i];
 
     if (!std::strcmp(curr, "-h") || !std::strcmp(curr, "--help")) {
-      this->_help = true;
-      break;
+      this->_show_help = true;
+      return;
     }
     if (!std::strcmp(curr, "-v") || !std::strcmp(curr, "--version")) {
-      this->_version = true;
-      break;
+      this->_show_version = true;
+      return;
     }
 
     if (!std::strcmp(curr, "-q") || !std::strcmp(curr, "--quiet")) {
-      print_number = false;
+      this->_print_number = false;
     }
     else if (!std::strcmp(curr, "-s") || !std::strcmp(curr, "--simple")) {
-      print_summary = false;
+      this->_print_summary = false;
     }
     else if (curr[0] == '-') {
-      unknown.push_back(curr);
+      this->_unknown.push_back(curr);
     }
     else {
-      this->_args.push_back({
-        curr,
-        print_number,
-        print_summary,
-        unknown
-      });
-
-      print_number = true;
-      print_summary = true;
-      unknown.clear();
+      do {
+        this->_n.push_back(argv[i]);
+      } while (++i < argc);
+      return;
     }
   }
 }
@@ -103,31 +95,41 @@ _version(false) {
 
 // Process arguments
 int UI::process() const {
-  if (this->_help) {
+  if (this->_show_help) {
     this->_print_help();
     return EXIT_SUCCESS;
   }
 
-  if (this->_version) {
+  if (this->_show_version) {
     this->_print_version();
     return EXIT_SUCCESS;
   }
 
-  if (this->_args.size() == 0) {
+  for (const char *const &str : this->_unknown) {
+    std::cerr << "Error. Unknown argument: \"" << str << "\"" << std::endl;
+  }
+
+  if (this->_n.size() == 0) {
     this->_print_error();
     return EXIT_FAILURE;
   }
 
-  for (const UI::arg &curr : this->_args) {
-    try {
-      Fibonacci(std::stoull(curr.n)).print(curr.print_summary, curr.print_number);
+  if (!this->_print_summary && !this->_print_number) {
+    std::cout << "Warning. Nothing is printed if the -q and -s options are specified at the same time." << std::endl;
+    return EXIT_SUCCESS;
+  }
 
-      for (const char *const str : curr.unknown) {
-        std::cerr << "Error. Unknown argument: \"" << str << "\"" << std::endl;
+  const char *const &last = this->_n.back();
+
+  for (const char *const &n : this->_n) {
+    try {
+      Fibonacci(std::stoull(n)).print(this->_print_summary, this->_print_number);
+      if (&n != &last) {
+        std::cout << std::endl;
       }
     }
     catch (const std::invalid_argument &err) {
-      std::cerr << "Error. Not valid number: \"" << curr.n << "\"" << std::endl;
+      std::cerr << "Error. Not valid number: \"" << n << "\"" << std::endl;
     }
     catch (const std::exception &err) {
       std::cerr << "Error. Unknown." << std::endl;

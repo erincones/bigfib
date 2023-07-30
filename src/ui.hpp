@@ -12,24 +12,6 @@
  */
 class UI {
   private:
-    // Private structs
-
-    /** Argument struct */
-    struct arg {
-      /** Fibonacci term */
-      const char *const n;
-
-      /** Print Fibonacci number */
-      bool print_number;
-
-      /** Print summary */
-      bool print_summary;
-
-      /** Unknown options */
-      std::vector<const char *> unknown;
-    };
-
-
     // Private constant members
 
     /** Binary name */
@@ -39,13 +21,22 @@ class UI {
     // Private members
 
     /** Show help */
-    bool _help;
+    bool _show_help;
 
     /** Show version */
-    bool _version;
+    bool _show_version;
 
-    /** Arguments list */
-    std::vector<arg> _args;
+    /** Print Fibonacci numbers */
+    bool _print_number;
+
+    /** Print summary */
+    bool _print_summary;
+
+    /** Fibonacci terms */
+    std::vector<const char *> _n;
+
+    /** Unknown options */
+    std::vector<const char *> _unknown;
 
 
     // Private methods

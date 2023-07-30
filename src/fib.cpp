@@ -30,6 +30,7 @@ bigint Fibonacci::calc() {
   bigint b(1, 1ULL);
 
   for (ull i = 1ULL; i < n; ++i) {
+    const bigint::const_iterator aend = a.end();
     bigint::iterator ai = a.begin();
     bigint::iterator bi = b.begin();
     ull carry = 0ULL;
@@ -50,7 +51,7 @@ bigint Fibonacci::calc() {
 
       ++ai;
       ++bi;
-    } while (ai != a.end());
+    } while (ai != aend);
 
     if (bi != b.end()) {
       a.push_back(*bi);
@@ -66,9 +67,9 @@ bigint Fibonacci::calc() {
 
 // Calculate Fibonacci number
 std::string Fibonacci::parse() {
-  std::stringstream dec;
-  bigint::const_reverse_iterator rbegin = this->_f.rbegin();
   const bigint::const_reverse_iterator rend = this->_f.rend();
+  bigint::const_reverse_iterator rbegin = this->_f.rbegin();
+  std::stringstream dec;
 
   dec << *rbegin;
 
