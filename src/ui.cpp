@@ -5,6 +5,10 @@
 #include <cstring>
 
 
+/** Version */
+#define VERSION "2.0"
+
+
 // Private methods
 
 // Display error message

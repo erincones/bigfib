@@ -1,4 +1,11 @@
+# Visual Studio Code files
 .vscode/
+
+# Binary and output files
 bin/
 build/
 out/
+
+# Source files
+src*/
+!src/

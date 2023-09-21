@@ -1,14 +1,7 @@
 #ifndef __FIB_HPP_
 #define __FIB_HPP_
 
-#include "common.hpp"
-
-#include <vector>
-#include <string>
-
-
-/** Big integer */
-typedef std::vector<ull> bigint;
+#include "bigint.hpp"
 
 
 /**
@@ -16,12 +9,6 @@ typedef std::vector<ull> bigint;
  */
 class Fibonacci {
   private:
-    // Private static members
-
-    /** Numeric base */
-    static const ull BASE = 1000000000000000000ULL;
-
-
     // Private members
 
     /** Fibonacci number */
@@ -41,9 +28,6 @@ class Fibonacci {
 
     /** Calculate Fibonacci number */
     bigint calc();
-
-    /** Parse Fibonacci number */
-    std::string parse();
 
 
   public:
@@ -71,11 +55,6 @@ class Fibonacci {
     /** Fibonacci number */
     inline const bigint &f() const {
       return this->_f;
-    }
-
-    /** Fibonacci number as std::string */
-    inline const std::string &str() const {
-      return this->_str;
     }
 
     /** Calculating time in milliseconds */

@@ -23,61 +23,34 @@ typedef std::chrono::high_resolution_clock::time_point time_point;
 
 // Calculate Fibonacci number
 bigint Fibonacci::calc() {
-  bigint a(1, 0ULL);
+  if (n == 0) {
+    return 0;
+  }
+  else if (n < 3) {
+    return 1;
+  }
 
-  if (n == 0ULL) return a;
+  ull h = 0;
+  bigint a = 0;
+  bigint b = 1;
 
-  bigint b(1, 1ULL);
+  for (ull i = n; i; ++h, i >>= 1ULL);
 
-  for (ull i = 1ULL; i < n; ++i) {
-    const bigint::const_iterator aend = a.end();
-    bigint::iterator ai = a.begin();
-    bigint::iterator bi = b.begin();
-    ull carry = 0ULL;
+  for (ull m = 1 << (h - 1); m; m >>= 1) {
+    bigint c = a * (b + b - a);
+    bigint d = a * a + b * b;
 
-    do {
-      ull c = *ai + *bi + carry;
-
-      if (c >= BASE) {
-        carry = 1ULL;
-        c -= Fibonacci::BASE;
-      }
-      else {
-        carry = 0ULL;
-      }
-
-      *ai = *bi;
-      *bi = c;
-
-      ++ai;
-      ++bi;
-    } while (ai != aend);
-
-    if (bi != b.end()) {
-      a.push_back(*bi);
-      *bi += carry;
+    if (n & m) {
+      a = d;
+      b = c + d;
     }
-    else if (carry) {
-      b.push_back(carry);
+    else {
+      a = c;
+      b = d;
     }
   }
 
-  return b;
-}
-
-// Calculate Fibonacci number
-std::string Fibonacci::parse() {
-  const bigint::const_reverse_iterator rend = this->_f.rend();
-  bigint::const_reverse_iterator rbegin = this->_f.rbegin();
-  std::stringstream dec;
-
-  dec << *rbegin;
-
-  while (++rbegin != rend) {
-    dec << std::setfill('0') << std::setw(18) << *rbegin;
-  }
-
-  return dec.str();
+  return a;
 }
 
 
@@ -94,7 +67,7 @@ Fibonacci::Fibonacci(const ull &n) : _calc_ms(-1.0), _cast_ms(-1.0), n(n) {
   this->_calc_ms = DURATION(stop - start).count();
 
   start = NOW();
-  this->_str = this->parse();
+  this->_str = std::string(this->_f);
   stop = NOW();
   this->_cast_ms = DURATION(stop - start).count();
 }
@@ -117,7 +90,7 @@ void Fibonacci::print(const bool &summary, const bool &number) const {
     std::cout
       << "Term: " << this->n
       << std::endl
-      << "Chunks: " << this->_f.size()
+      << "Chunks: " << this->_f.chunks()
       << std::endl
       << "Digits: " << this->_str.size()
       << std::endl

@@ -1,8 +1,6 @@
 #ifndef __UI_HPP_
 #define __UI_HPP_
 
-#include "common.hpp"
-
 #include <vector>
 #include <string>
 
