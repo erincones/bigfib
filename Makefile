@@ -14,9 +14,10 @@ CP := cp -ruv
 
 
 # Compiler
-CXX = clang++
+CXX = g++
 CXXFLAGS = -Wall -Wextra -Wpedantic
-LDFLAGS = $(shell llvm-config --libs)
+LIBS =
+LDFLAGS =
 
 # Main target
 TARGET := $(BIN)/$(PROJECT)
@@ -54,7 +55,7 @@ CXXOBJECTS := $(patsubst $(SRC)/%,$(BUILD)/%,$(CXXSOURCES:.cpp=.o))
 
 # Compilation
 $(TARGET): $(CXXOBJECTS) | $$(@D)/
-	$(CXX) -o $@ $^ $(LDFLAGS)
+	$(CXX) -o $@ $^ $(LIBS) $(LDFLAGS)
 
 $(BUILD)/%.o: $(SRC)/%.cpp | $$(@D)/
 	$(CXX) $(CXXFLAGS) -o $@ -c $<

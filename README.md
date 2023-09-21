@@ -1,6 +1,6 @@
 # Big Fibonacci
 
-Calculates Fibonacci numbers with arbitrary precision. Fast Doubling is used as
+Calculates Fibonacci numbers with arbitrary precision. Fast doubling is used as
 Fibonacci alforithm which is explanied by [Chun-Min Chang], and Karatsuba
 algoritm for multiplication inspired by the [Vladimir Petrigo] implementation
 for big numbers.
@@ -14,9 +14,8 @@ overloaded. Also, the `std::string` conversion operator is overloaded.
 
 Use the [`Makefile`] file to build the binary at `bin/bigfib`.
 
-`clang` is configured as the compiler by default, you can modify the [`CXX`]
-variable to `g++` if you want and comment the [`LDFLAGS`] variable if is
-necessary.
+`g++` is configured as the compiler by default, you can change it modifying the
+[`CXX`] variable if you want.
 
 
 ## CLI usage
@@ -46,5 +45,4 @@ Share and enjoy!
 [`bigint`]: src/bigint.hpp
 [`Makefile`]: Makefile
 [`CXX`]: Makefile#L17
-[`LDFLAGS`]: Makefile#L19
 [LICENSE]: LICENSE
