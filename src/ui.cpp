@@ -3,10 +3,11 @@
 
 #include <iostream>
 #include <cstring>
+#include <stdexcept>
 
 
 /** Version */
-#define VERSION "2.0"
+#define VERSION "2.1"
 
 
 // Private methods

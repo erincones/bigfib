@@ -14,10 +14,11 @@ CP := cp -ruv
 
 
 # Compiler
-CXX = g++
+#CXX = g++
 CXXFLAGS = -Wall -Wextra -Wpedantic
-LIBS =
-LDFLAGS =
+#LIBS =
+#LDFLAGS =
+
 
 # Main target
 TARGET := $(BIN)/$(PROJECT)

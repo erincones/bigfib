@@ -9,7 +9,7 @@
 // Naive multiplication
 std::vector<ull> bigint::_NAIVE_MULT(const std::vector<ull> &a, const std::vector<ull> &b) {
   std::size_t len = a.size();
-  std::vector<ull> r(len << 1);
+  std::vector<ull> r(len << 1ULL);
 
   std::vector<ull>::const_iterator aend = a.cend();
   std::vector<ull>::const_iterator bend = b.cend();
@@ -39,7 +39,7 @@ std::vector<ull> bigint::_NAIVE_MULT(const std::vector<ull> &a, const std::vecto
 std::vector<ull> bigint::_KARATSUBA_MULT(const std::vector<ull> &a, const std::vector<ull> &b) {
   const std::size_t len = a.size();
 
-  if (len <= 32) {
+  if (len <= static_cast<std::size_t>(32)) {
     return bigint::_NAIVE_MULT(a, b);
   }
 
@@ -64,7 +64,7 @@ std::vector<ull> bigint::_KARATSUBA_MULT(const std::vector<ull> &a, const std::v
   const std::vector<ull>::const_iterator bli = bl.cbegin();
   const std::vector<ull>::const_iterator bri = br.cbegin();
 
-  for (std::size_t i = 0; i < mid; ++i) {
+  for (std::size_t i = static_cast<std::size_t>(0); i < mid; ++i) {
     *(alri + i) = *(ali + i) + *(ari + i);
     *(blri + i) = *(bli + i) + *(bri + i);
   }
@@ -77,7 +77,7 @@ std::vector<ull> bigint::_KARATSUBA_MULT(const std::vector<ull> &a, const std::v
   const std::vector<ull>::iterator p3i = p3.begin();
   const std::vector<ull>::iterator ri = r.begin();
 
-  for (std::size_t i = 0; i < len; ++i) {
+  for (std::size_t i = static_cast<std::size_t>(0); i < len; ++i) {
     const ull p2ii = *(p2i + i);
     *(p3i + i) -= p2ii + *(p1i + i);
     *(ri + i) = p2ii;
@@ -225,7 +225,7 @@ const bigint operator - (const bigint &a, const bigint &b) {
   for (std::vector<ull>::const_reverse_iterator i = r.crbegin(); *i == 0ULL; ++i, ++c);
 
   if (c != 0ULL) {
-    r.resize(std::max(r.size() - static_cast<std::size_t>(c), static_cast<std::size_t>(1)));
+    r.resize(r.size() > static_cast<std::size_t>(c) ? r.size() - static_cast<std::size_t>(c) : static_cast<std::size_t>(1));
   }
 
   return r;
@@ -264,7 +264,7 @@ const bigint operator * (const bigint &a, const bigint &b) {
   for (std::vector<ull>::const_reverse_iterator i = r.crbegin(); *i == 0ULL; ++i, ++extra);
 
   if (extra != static_cast<std::size_t>(0)) {
-    r.resize(std::max(r.size() - extra, static_cast<std::size_t>(1)));
+    r.resize(r.size() > extra ? r.size() - extra : static_cast<std::size_t>(1));
   }
 
   return r;

@@ -53,7 +53,7 @@ class bigint {
     /**
      * Default constructor
      */
-    inline bigint() : _data(1, 0) {};
+    inline bigint() : _data(static_cast<std::size_t>(1), 0ULL) {};
 
     /**
      * Big integer copy constructor
@@ -67,7 +67,7 @@ class bigint {
      *
      * @param n Initializator
      */
-    inline bigint(const ull &n) : _data(1, n) {};
+    inline bigint(const ull &n) : _data(static_cast<std::size_t>(1), n) {};
 
 
     /**

@@ -12,10 +12,14 @@ overloaded. Also, the `std::string` conversion operator is overloaded.
 
 ## Build
 
-Use the [`Makefile`] file to build the binary at `bin/bigfib`.
+Use the [`Makefile`] file to build the binary. There are some targets available:
 
-`g++` is configured as the compiler by default, you can change it modifying the
-[`CXX`] variable if you want.
+ - `release`: The default target generates de optimized binary at `bin/bigfib`.
+ - `debug`: Generates the binary for debugging with `gdb`.
+ - `clean`: Removes all the compilation files.
+
+Feel free to update the [`CXX`], [`CXXFLAGS`], [`LIBS`] and [`LDFLAGS`]
+variables if you need.
 
 
 ## CLI usage
@@ -45,4 +49,7 @@ Share and enjoy!
 [`bigint`]: src/bigint.hpp
 [`Makefile`]: Makefile
 [`CXX`]: Makefile#L17
+[`CXXFLAGS`]: Makefile#L18
+[`LIBS`]: Makefile#L19
+[`LDFLAGS`]: Makefile#L20
 [LICENSE]: LICENSE

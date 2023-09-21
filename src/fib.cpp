@@ -5,6 +5,7 @@
 #include <sstream>
 #include <chrono>
 
+
 /** Get current clock time */
 #define NOW std::chrono::high_resolution_clock::now
 
@@ -23,20 +24,20 @@ typedef std::chrono::high_resolution_clock::time_point time_point;
 
 // Calculate Fibonacci number
 bigint Fibonacci::calc() {
-  if (n == 0) {
-    return 0;
+  if (n == 0ULL) {
+    return 0ULL;
   }
-  else if (n < 3) {
-    return 1;
+  else if (n < 3ULL) {
+    return 1ULL;
   }
 
-  ull h = 0;
-  bigint a = 0;
-  bigint b = 1;
+  ull h = 0ULL;
+  bigint a = 0ULL;
+  bigint b = 1ULL;
 
   for (ull i = n; i; ++h, i >>= 1ULL);
 
-  for (ull m = 1 << (h - 1); m; m >>= 1) {
+  for (ull m = 1ULL << (h - 1ULL); m; m >>= 1ULL) {
     bigint c = a * (b + b - a);
     bigint d = a * a + b * b;
 
@@ -109,4 +110,4 @@ void Fibonacci::print(const bool &summary, const bool &number) const {
       << "Total time:       " << FORMAT << this->_calc_ms + this->_cast_ms + cout_ms << " ms"
       << std::endl;
   }
-};
+}
