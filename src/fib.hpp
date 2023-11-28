@@ -52,17 +52,29 @@ class Fibonacci {
 
     // Public inline getters
 
-    /** Fibonacci number */
+    /**
+     * Get the fibonacci number
+     *
+     * @return Fibonacci number
+     */
     inline const bigint &f() const {
       return this->_f;
     }
 
-    /** Calculating time in milliseconds */
+    /**
+     * Get the calculating time in milliseconds
+     *
+     * @return Calculating time in milliseconds
+     */
     inline const double &calc_time() const {
       return this->_calc_ms;
     }
 
-    /** Casting time in milliseconds */
+    /**
+     * Get the casting time in milliseconds
+     *
+     * @return Casting time in milliseconds
+     */
     inline const double &cast_time() const{
       return this->_cast_ms;
     }

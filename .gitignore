@@ -6,6 +6,9 @@ bin/
 build/
 out/
 
-# Source files
+# Alternative source files
 src*/
 !src/
+
+# Other formats
+*.zip

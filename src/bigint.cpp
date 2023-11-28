@@ -1,4 +1,5 @@
 #include "bigint.hpp"
+
 #include <sstream>
 #include <iomanip>
 #include <cmath>
@@ -72,23 +73,15 @@ std::vector<ull> bigint::_KARATSUBA_MULT(const std::vector<ull> &a, const std::v
   std::vector<ull> p3 = bigint::_KARATSUBA_MULT(alr, blr);
   p3.resize(len);
 
-  const std::vector<ull>::const_iterator p1i = p1.cbegin();
-  const std::vector<ull>::const_iterator p2i = p2.cbegin();
-  const std::vector<ull>::iterator p3i = p3.begin();
-  const std::vector<ull>::iterator ri = r.begin();
+  std::vector<ull>::const_iterator p1i = p1.cbegin();
+  std::vector<ull>::const_iterator p2i = p2.cbegin();
+  std::vector<ull>::const_iterator p3i = p3.cbegin();
+  std::vector<ull>::iterator ri = r.begin();
 
-  for (std::size_t i = static_cast<std::size_t>(0); i < len; ++i) {
-    const ull p2ii = *(p2i + i);
-    *(p3i + i) -= p2ii + *(p1i + i);
-    *(ri + i) = p2ii;
-  }
-
-  for (std::size_t i = len; i < top; ++i) {
-    *(ri + i) = *(p1i + i - len);
-  }
-
-  for (std::size_t i = mid; i < len + mid; ++i) {
-    *(ri + i) += *(p3i + i - mid);
+  for (std::size_t i = static_cast<std::size_t>(0); i < len; ++i, ++p1i, ++p2i, ++p3i, ++ri) {
+    *ri = *p2i;
+    *(ri + len) = *p1i;
+    *(ri + mid) += *p3i - (*p1i + *p2i);
   }
 
   return r;
@@ -219,13 +212,6 @@ const bigint operator - (const bigint &a, const bigint &b) {
     r.push_back(c);
 
     ++ai;
-  }
-
-  c = 0ULL;
-  for (std::vector<ull>::const_reverse_iterator i = r.crbegin(); *i == 0ULL; ++i, ++c);
-
-  if (c != 0ULL) {
-    r.resize(r.size() > static_cast<std::size_t>(c) ? r.size() - static_cast<std::size_t>(c) : static_cast<std::size_t>(1));
   }
 
   return r;

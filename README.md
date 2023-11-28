@@ -35,6 +35,35 @@ Calculate the Fibonacci number of the given N terms.
 ```
 
 
+## Tests outputs
+
+Some outputs using the quiet options to avoid the Fibonacci number printing. All
+tests have been executed on a [AMD Ryzen&trade; 7 5700U]:
+
+```Text
+Term: 512
+Chunks: 12
+Digits: 107
+Calculating time:       0.013195 ms
+Casting time:           0.015670 ms
+Total time:             0.028865 ms
+
+Term: 4784969
+Chunks: 111112
+Digits: 1000000
+Calculating time:     220.479498 ms
+Casting time:           3.840622 ms
+Total time:           224.320120 ms
+
+Term: 100000000
+Chunks: 2322085
+Digits: 20898764
+Calculating time:   52460.604902 ms
+Casting time:          76.934597 ms
+Total time:         52537.539499 ms
+```
+
+
 ## License
 
 Licensed under [the MIT license][LICENSE].
@@ -46,6 +75,7 @@ Share and enjoy!
 
 [Chun-Min Chang]: https://chunminchang.github.io/blog/post/calculating-fibonacci-numbers-by-fast-doubling
 [Vladimir Petrigo]: https://github.com/vpetrigo/multiplication
+[AMD Ryzen&trade; 7 5700U]: https://www.amd.com/en/products/apu/amd-ryzen-7-5700u
 [`bigint`]: src/bigint.hpp
 [`Makefile`]: Makefile
 [`CXX`]: Makefile#L17

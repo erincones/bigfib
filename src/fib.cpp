@@ -4,6 +4,8 @@
 #include <iomanip>
 #include <sstream>
 #include <chrono>
+#include <future>
+#include <functional>
 
 
 /** Get current clock time */
@@ -34,12 +36,28 @@ bigint Fibonacci::calc() {
   ull h = 0ULL;
   bigint a = 0ULL;
   bigint b = 1ULL;
+  bigint c;
+  bigint d;
+
+  std::function<bigint()> p = [&a, &b]() -> bigint { return a * (b + b - a); };
+  std::function<bigint()> q = [&a]() -> bigint { return a * a; };
+  std::function<bigint()> s = [&b]() -> bigint { return b * b; };
 
   for (ull i = n; i; ++h, i >>= 1ULL);
 
-  for (ull m = 1ULL << (h - 1ULL); m; m >>= 1ULL) {
-    bigint c = a * (b + b - a);
-    bigint d = a * a + b * b;
+  for (ull m = 1ULL << (h - 1ULL), i = 1ULL; m; m >>= 1ULL, i <<= 1ULL) {
+    if (i > 0x20000ULL) {
+      std::future<bigint> x = std::async(p);
+      std::future<bigint> y = std::async(q);
+      std::future<bigint> z = std::async(s);
+
+      c = x.get();
+      d = y.get() + z.get();
+    }
+    else {
+      c = a * (b + b - a);
+      d = a * a + b * b;
+    }
 
     if (n & m) {
       a = d;

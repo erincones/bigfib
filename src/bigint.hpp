@@ -47,6 +47,16 @@ class bigint {
     std::vector<ull> _data;
 
 
+    // Private constructors
+
+    /**
+     * Big integer constructor from std::vector
+     *
+     * @param n Initializator
+    */
+    inline bigint(const std::vector<ull> n) : _data(n) {};
+
+
   public:
     // Public constructors
 
@@ -63,19 +73,12 @@ class bigint {
     inline bigint(const bigint &n) : _data(n._data) {};
 
     /**
-     * Big integer constructor from unsigned long long
+     * Big integer constructor from unsigned long long less than the
+     * `bigint::_BASE`
      *
      * @param n Initializator
      */
     inline bigint(const ull &n) : _data(static_cast<std::size_t>(1), n) {};
-
-
-    /**
-     * Big integer constructor from std::vector
-     *
-     * @param n Initializator
-    */
-    inline bigint(const std::vector<ull> n) : _data(n) {};
 
 
     // Constant getters
@@ -83,7 +86,7 @@ class bigint {
     /**
      * Get the number of chunks
      *
-     * @returns Number of memory chunks
+     * @return Number of memory chunks
      */
     inline std::size_t chunks() const {
       return this->_data.size();
@@ -108,16 +111,16 @@ class bigint {
      * Addition operator
      *
      * @param a Augend
-     * @param a Addend
+     * @param b Addend
      * @return Addition sum
      */
     friend const bigint operator + (const bigint &a, const bigint &b);
 
     /**
-     * Subtraction operator
+     * Subtraction operator without extra zeroes removing
      *
      * @param a Minuend
-     * @param a Subtrahend
+     * @param b Subtrahend
      * @return Subtraction difference
      */
     friend const bigint operator - (const bigint &a, const bigint &b);
@@ -126,10 +129,22 @@ class bigint {
      * Multiplication operator
      *
      * @param a Multiplier
-     * @param a Multiplicand
+     * @param b Multiplicand
      * @return Multiplication product
      */
     friend const bigint operator * (const bigint &a, const bigint &b);
+
+    /**
+     * Standard output
+     *
+     * @param stream Output stream
+     * @param n Number to output
+     * @return The same output stream
+     */
+    friend inline std::ostream &operator << (std::ostream &stream, const bigint &n) {
+      stream << std::string(n);
+      return stream;
+    }
 };
 
 #endif // __BIGINT_HPP_
