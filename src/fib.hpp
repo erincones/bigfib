@@ -1,5 +1,5 @@
-#ifndef __FIB_HPP_
-#define __FIB_HPP_
+#ifndef FIB_HPP_
+#define FIB_HPP_
 
 #include "bigint.hpp"
 
@@ -91,4 +91,4 @@ class Fibonacci {
     void print(const bool &summary = true, const bool &number = true) const;
 };
 
-#endif // __FIB_HPP_
+#endif // FIB_HPP_

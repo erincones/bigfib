@@ -1,5 +1,5 @@
-#ifndef __UI_HPP_
-#define __UI_HPP_
+#ifndef UI_HPP_
+#define UI_HPP_
 
 #include <vector>
 #include <string>
@@ -70,4 +70,4 @@ class UI {
     int process() const;
 };
 
-#endif // __UI_HPP_
+#endif // UI_HPP_

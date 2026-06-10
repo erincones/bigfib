@@ -1,5 +1,5 @@
-#ifndef __BIGINT_HPP_
-#define __BIGINT_HPP_
+#ifndef BIGINT_HPP_
+#define BIGINT_HPP_
 
 #include <vector>
 #include <string>
@@ -147,4 +147,4 @@ class bigint {
     }
 };
 
-#endif // __BIGINT_HPP_
+#endif // BIGINT_HPP_
