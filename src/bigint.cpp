@@ -8,18 +8,15 @@
 // Static private methods
 
 // Naive multiplication
-std::vector<ull> bigint::_NAIVE_MULT(const std::vector<ull> &a, const std::vector<ull> &b) {
-  std::size_t len = a.size();
+std::vector<ull> bigint::_NAIVE_MULT(std::vector<ull>::const_iterator a, std::vector<ull>::const_iterator b, const std::size_t &len) {
   std::vector<ull> r(len << 1ULL);
 
-  std::vector<ull>::const_iterator aend = a.cend();
-  std::vector<ull>::const_iterator bend = b.cend();
-  std::vector<ull>::const_iterator ai = a.cbegin();
+  std::vector<ull>::const_iterator ai = a;
   std::vector<ull>::iterator ri = r.begin();
   std::size_t i = static_cast<std::size_t>(0);
 
   do {
-    std::vector<ull>::const_iterator bi = b.cbegin();
+    std::vector<ull>::const_iterator bi = b;
     std::size_t j = static_cast<std::size_t>(0);
 
     do {
@@ -27,50 +24,48 @@ std::vector<ull> bigint::_NAIVE_MULT(const std::vector<ull> &a, const std::vecto
 
       ++bi;
       ++j;
-    } while (bi != bend);
+    } while (j < len);
 
     ++ai;
     ++i;
-  } while (ai != aend);
+  } while (i < len);
 
   return r;
 }
 
 // Karatsuba multiplication
-std::vector<ull> bigint::_KARATSUBA_MULT(const std::vector<ull> &a, const std::vector<ull> &b) {
-  const std::size_t len = a.size();
-
+std::vector<ull> bigint::_KARATSUBA_MULT(std::vector<ull>::const_iterator a, std::vector<ull>::const_iterator b, const std::size_t &len) {
   if (len <= static_cast<std::size_t>(32)) {
-    return bigint::_NAIVE_MULT(a, b);
+    return bigint::_NAIVE_MULT(a, b, len);
   }
 
   const std::size_t top = len << static_cast<std::size_t>(1);
   const std::size_t mid = len >> static_cast<std::size_t>(1);
   std::vector<ull> r(top);
 
-  const std::vector<ull> ar = std::vector<ull>(a.cbegin(), a.cbegin() + mid);
-  const std::vector<ull> al = std::vector<ull>(a.cbegin() + mid, a.end());
-  const std::vector<ull> br = std::vector<ull>(b.cbegin(), b.cbegin() + mid);
-  const std::vector<ull> bl = std::vector<ull>(b.cbegin() + mid, b.end());
+  std::vector<ull>::const_iterator ar = a;
+  std::vector<ull>::const_iterator al = a + mid;
+  std::vector<ull>::const_iterator br = b;
+  std::vector<ull>::const_iterator bl = b + mid;
 
-  const std::vector<ull> p1 = bigint::_KARATSUBA_MULT(al, bl);
-  const std::vector<ull> p2 = bigint::_KARATSUBA_MULT(ar, br);
+  const std::vector<ull> p1 = bigint::_KARATSUBA_MULT(al, bl, mid);
+  const std::vector<ull> p2 = bigint::_KARATSUBA_MULT(ar, br, mid);
 
   std::vector<ull> alr(mid);
   std::vector<ull> blr(mid);
   const std::vector<ull>::iterator alri = alr.begin();
   const std::vector<ull>::iterator blri = blr.begin();
-  const std::vector<ull>::const_iterator ali = al.cbegin();
-  const std::vector<ull>::const_iterator ari = ar.cbegin();
-  const std::vector<ull>::const_iterator bli = bl.cbegin();
-  const std::vector<ull>::const_iterator bri = br.cbegin();
+  const std::vector<ull>::const_iterator ali = al;
+  const std::vector<ull>::const_iterator ari = ar;
+  const std::vector<ull>::const_iterator bli = bl;
+  const std::vector<ull>::const_iterator bri = br;
 
   for (std::size_t i = static_cast<std::size_t>(0); i < mid; ++i) {
     *(alri + i) = *(ali + i) + *(ari + i);
     *(blri + i) = *(bli + i) + *(bri + i);
   }
 
-  std::vector<ull> p3 = bigint::_KARATSUBA_MULT(alr, blr);
+  std::vector<ull> p3 = bigint::_KARATSUBA_MULT(alr.begin(), blr.begin(), mid);
   p3.resize(len);
 
   std::vector<ull>::const_iterator p1i = p1.cbegin();
@@ -109,7 +104,7 @@ bigint::operator std::string() const {
 // Public assingment operators overloading
 
 // Direct assignment
-bigint &bigint::operator = (const bigint &n) {
+bigint &bigint::operator = (const bigint &n) & {
   this->_data = n._data;
   return *this;
 }
@@ -118,7 +113,7 @@ bigint &bigint::operator = (const bigint &n) {
 // Public arithmetic operators overloading
 
 // Addition operator
-const bigint operator + (const bigint &a, const bigint &b) {
+bigint operator + (const bigint &a, const bigint &b) {
   std::vector<ull> r;
   r.reserve(b._data.size() + static_cast<std::size_t>(1));
 
@@ -170,7 +165,7 @@ const bigint operator + (const bigint &a, const bigint &b) {
 }
 
 // Subtraction operator
-const bigint operator - (const bigint &a, const bigint &b) {
+bigint operator - (const bigint &a, const bigint &b) {
   std::vector<ull> r;
   r.reserve(a._data.size());
 
@@ -218,7 +213,7 @@ const bigint operator - (const bigint &a, const bigint &b) {
 }
 
 // Multiplication operator
-const bigint operator * (const bigint &a, const bigint &b) {
+bigint operator * (const bigint &a, const bigint &b) {
   std::vector<ull> x(a._data);
   std::vector<ull> y(b._data);
   std::size_t len = std::max(x.size(), y.size());
@@ -231,7 +226,7 @@ const bigint operator * (const bigint &a, const bigint &b) {
   x.resize(len);
   y.resize(len);
 
-  std::vector<ull> r = bigint::_KARATSUBA_MULT(x, y);
+  std::vector<ull> r = bigint::_KARATSUBA_MULT(x.cbegin(), y.cbegin(), len);
   std::vector<ull>::const_iterator rend = r.cend() - extra;
   std::vector<ull>::iterator ri = r.begin();
 

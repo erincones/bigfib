@@ -29,7 +29,7 @@ class bigint {
      * @param a Multiplicand
      * @return Multiplication product
      */
-    static std::vector<ull> _NAIVE_MULT(const std::vector<ull> &a, const std::vector<ull> &b);
+    static std::vector<ull> _NAIVE_MULT(std::vector<ull>::const_iterator a, std::vector<ull>::const_iterator b, const std::size_t &len);
 
     /**
      * Karatsuba multiplication
@@ -38,7 +38,7 @@ class bigint {
      * @param a Multiplicand
      * @return Multiplication product
      */
-    static std::vector<ull> _KARATSUBA_MULT(const std::vector<ull> &a, const std::vector<ull> &b);
+    static std::vector<ull> _KARATSUBA_MULT(std::vector<ull>::const_iterator a, std::vector<ull>::const_iterator b, const std::size_t &len);
 
 
     // Private members
@@ -54,7 +54,7 @@ class bigint {
      *
      * @param n Initializator
     */
-    inline bigint(const std::vector<ull> n) : _data(n) {};
+    inline bigint(const std::vector<ull> &n) : _data(n) {};
 
 
   public:
@@ -71,6 +71,13 @@ class bigint {
      * @param n Number to copy
      */
     inline bigint(const bigint &n) : _data(n._data) {};
+
+    /**
+     * Big integer move constructor
+     *
+     * @param n Number to move
+     */
+    inline bigint(bigint &&n) : _data(std::move(n._data)) {};
 
     /**
      * Big integer constructor from unsigned long long less than the
@@ -102,7 +109,19 @@ class bigint {
     // Public assingment operators overloading
 
     /** Direct assignment */
-    bigint &operator = (const bigint &n);
+    bigint &operator = (const bigint &n) &;
+
+    /**
+     * Move asignment operator
+     *
+     * @param n Number to move
+     */
+    inline bigint &operator = (bigint &&n) noexcept {
+      if (this != &n) {
+        this->_data = std::move(n._data);
+      }
+      return *this;
+    }
 
 
     // Public arithmetic operators overloading
@@ -114,7 +133,7 @@ class bigint {
      * @param b Addend
      * @return Addition sum
      */
-    friend const bigint operator + (const bigint &a, const bigint &b);
+    friend bigint operator + (const bigint &a, const bigint &b);
 
     /**
      * Subtraction operator without extra zeroes removing
@@ -123,7 +142,7 @@ class bigint {
      * @param b Subtrahend
      * @return Subtraction difference
      */
-    friend const bigint operator - (const bigint &a, const bigint &b);
+    friend bigint operator - (const bigint &a, const bigint &b);
 
     /**
      * Multiplication operator
@@ -132,7 +151,7 @@ class bigint {
      * @param b Multiplicand
      * @return Multiplication product
      */
-    friend const bigint operator * (const bigint &a, const bigint &b);
+    friend bigint operator * (const bigint &a, const bigint &b);
 
     /**
      * Standard output

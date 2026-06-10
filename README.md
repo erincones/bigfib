@@ -14,7 +14,7 @@ overloaded. Also, the `std::string` conversion operator is overloaded.
 
 Use the [`Makefile`] file to build the binary. There are some targets available:
 
- - `release`: The default target generates de optimized binary at `bin/bigfib`.
+ - `release`: The default target generates the optimized binary at `bin/bigfib`.
  - `debug`: Generates the binary for debugging with `gdb`.
  - `clean`: Removes all the compilation files.
 
@@ -44,54 +44,54 @@ printing.
 bigfib -q 512 4784969 100000000
 ```
 
-### [AMD Ryzen&trade; 7 5700U]
-
-```Text
-Term: 512
-Chunks: 12
-Digits: 107
-Calculating time:       0.013195 ms
-Casting time:           0.015670 ms
-Total time:             0.028865 ms
-
-Term: 4784969
-Chunks: 111112
-Digits: 1000000
-Calculating time:     220.479498 ms
-Casting time:           3.840622 ms
-Total time:           224.320120 ms
-
-Term: 100000000
-Chunks: 2322085
-Digits: 20898764
-Calculating time:   52460.604902 ms
-Casting time:          76.934597 ms
-Total time:         52537.539499 ms
-```
-
 ### [Intel&reg; Core&trade; i5-13420H]
 
 ```Text
 Term: 512
 Chunks: 12
 Digits: 107
-Calculating time:       0.010548 ms
-Casting time:           0.002362 ms
-Total time:             0.012910 ms
+Calculating time:       0.007045 ms
+Casting time:           0.016198 ms
+Total time:             0.023243 ms
 
 Term: 4784969
 Chunks: 111112
 Digits: 1000000
-Calculating time:     181.037429 ms
-Casting time:           2.739238 ms
-Total time:           183.776667 ms
+Calculating time:     153.618331 ms
+Casting time:           2.326550 ms
+Total time:           155.944881 ms
 
 Term: 100000000
 Chunks: 2322085
 Digits: 20898764
-Calculating time:   39561.871474 ms
-Casting time:          54.250652 ms
-Total time:         39616.122126 ms
+Calculating time:   33070.948792 ms
+Casting time:          58.554075 ms
+Total time:         33129.502867 ms
+```
+
+### [Qualcomm&reg; Snapdragon&trade; 710]
+
+```Text
+Term: 512
+Chunks: 12
+Digits: 107
+Calculating time:       0.085416 ms
+Casting time:           0.057031 ms
+Total time:             0.142447 ms
+
+Term: 4784969
+Chunks: 111112
+Digits: 1000000
+Calculating time:    1033.889999 ms
+Casting time:          48.786984 ms
+Total time:          1082.676983 ms
+
+Term: 100000000
+Chunks: 2322085
+Digits: 20898764
+Calculating time:  243174.619589 ms
+Casting time:         911.000612 ms
+Total time:        244085.620201 ms
 ```
 
 
@@ -106,8 +106,8 @@ Share and enjoy!
 
 [Chun-Min Chang]: https://chunminchang.github.io/blog/post/calculating-fibonacci-numbers-by-fast-doubling
 [Vladimir Petrigo]: https://github.com/vpetrigo/multiplication
-[AMD Ryzen&trade; 7 5700U]: https://www.amd.com/en/products/apu/amd-ryzen-7-5700u
 [Intel&reg; Core&trade; i5-13420H]: https://www.intel.la/content/www/xl/es/products/sku/232173/intel-core-i513420h-processor-12m-cache-up-to-4-60-ghz/specifications.html
+[Qualcomm&reg; Snapdragon&trade; 710]: https://www.qualcomm.com/smartphones/products/7-series/snapdragon-710-mobile-platform
 [`bigint`]: src/bigint.hpp
 [`Makefile`]: Makefile
 [`CXX`]: Makefile#L17

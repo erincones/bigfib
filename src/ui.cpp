@@ -7,7 +7,7 @@
 
 
 /** Version */
-#define VERSION "2.1"
+#define VERSION "2.2"
 
 
 // Private methods
@@ -43,7 +43,7 @@ void UI::_print_version() const {
   std::cout
     << this->_bin << " " << VERSION
     << std::endl
-    << "Copyright (C) 2023 Erick Rincones."
+    << "Copyright (C) 2026 Erick Rincones."
     << std::endl
     << "Licensed under The MIT License."
     << std::endl

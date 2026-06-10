@@ -14,10 +14,10 @@ CP := cp -ruv
 
 
 # Compiler
-#CXX = g++
-CXXFLAGS = -Wall -Wextra -Wpedantic -pthread
-#LIBS =
-LDFLAGS = -pthread
+#CXX := g++
+CXXFLAGS := -Wall -Wextra -Wpedantic -pthread
+#LIBS :=
+LDFLAGS := -pthread
 
 
 # Main target
@@ -50,8 +50,8 @@ $(BIN)/:
 	$(MKDIR) $@
 
 # CXX files
-CXXSOURCES := $(shell find $(SRC) -type f -name *.cpp)
-CXXOBJECTS := $(patsubst $(SRC)/%,$(BUILD)/%,$(CXXSOURCES:.cpp=.o))
+CXXSOURCES = $(shell find $(SRC) -type f -name *.cpp)
+CXXOBJECTS = $(patsubst $(SRC)/%,$(BUILD)/%,$(CXXSOURCES:.cpp=.o))
 
 
 # Compilation
