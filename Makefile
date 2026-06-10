@@ -15,9 +15,9 @@ CP := cp -ruv
 
 # Compiler
 #CXX = g++
-CXXFLAGS = -Wall -Wextra -Wpedantic
+CXXFLAGS = -Wall -Wextra -Wpedantic -pthread
 #LIBS =
-#LDFLAGS =
+LDFLAGS = -pthread
 
 
 # Main target
